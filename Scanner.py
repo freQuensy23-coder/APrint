@@ -39,4 +39,3 @@ class Scanner(object):
     def __get_period(self):
         regex = re.search(r"Сумма\sк\sоплате:\s([\d\s,]*)\n([\s]*)за([\s]*)(Январь|Февраль|Март|Апрель|Май|Июнь|Июль|Август|Сенятябрь|Октябрь|Ноябрь|Декабрь) ([\d]*) г.", self.page_text)
         return regex.group(4) + " " + regex.group(5) + "г."
-
