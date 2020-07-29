@@ -14,6 +14,12 @@ class Scanner(object):
         self.period = self.__get_period()
         self.name = self.__get_name()
         self.address = self.__get_address()
+        self.data = {"path":self.path,
+                     "cost":self.cost,
+                     "bank_id":self.bank_id,
+                     "period":self.period,
+                     "name":self.name,
+                     "address":self.address}
 
     def __str__(self):
         return "PDF {pdf}  :  Р/с {bank_id}, Имя: {name} по адресу {add}, Цена: {cost} за периуд {period}".format(
