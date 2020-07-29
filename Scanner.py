@@ -34,7 +34,7 @@ class Scanner(object):
 
     def __get_bank_id(self):
         """Получает номер илчцегого счета (прим. № л/сч 000000048)"""
-        return self.get_data_from_pdf(r"№\sл/сч\s([\d\s,]*)\n").replace("№л/сч","")
+        return self.get_data_from_pdf(r"№\sл/сч\s([\d\s\w]*?)\n").replace("№л/сч","")
 
     def __get_period(self):
         regex = re.search(r"Сумма\sк\sоплате:\s([\d\s,]*)\n([\s]*)за([\s]*)(Январь|Февраль|Март|Апрель|Май|Июнь|Июль|Август|Сенятябрь|Октябрь|Ноябрь|Декабрь) ([\d]*) г.", self.page_text)

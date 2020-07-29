@@ -10,3 +10,4 @@ with open("res.txt", "a") as res:
     for path in paths:
         scanner = Scanner(path)
         res.write(str(scanner))
+        res.write("\n")
