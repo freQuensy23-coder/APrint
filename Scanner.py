@@ -12,9 +12,17 @@ class Scanner(object):
         self.cost = self.__get_cost()
         self.bank_id = self.__get_bank_id()
         self.period = self.__get_period()
+        self.name = self.__get_name()
+        self.address = self.__get_address()
 
     def __str__(self):
-        return "Р/с {bank_id}, Цена: {cost} за периуд {period}".format(bank_id = self.bank_id, cost = self.cost, period = self.period)
+        return "PDF {pdf}  :  Р/с {bank_id}, Имя: {name} по адресу {add}, Цена: {cost} за периуд {period}".format(
+            bank_id = self.bank_id,
+            cost = self.cost,
+            period = self.period,
+            name = self.name,
+            pdf = self.path,
+            add = self.address)
 
     def __scan(self):
         """Получает весь текст из пдф -ки"""
@@ -37,5 +45,14 @@ class Scanner(object):
         return self.get_data_from_pdf(r"№\sл/сч\s([\d\s\w]*?)\n").replace("№л/сч","")
 
     def __get_period(self):
+        """Получает периуд оплаты"""
         regex = re.search(r"Сумма\sк\sоплате:\s([\d\s,]*)\n([\s]*)за([\s]*)(Январь|Февраль|Март|Апрель|Май|Июнь|Июль|Август|Сенятябрь|Октябрь|Ноябрь|Декабрь) ([\d]*) г.", self.page_text)
         return regex.group(4) + " " + regex.group(5) + "г."
+
+    def __get_name(self):
+        """Получает имя платильщика"""
+        return re.search(r"Плательщик: ([\w\W]*?)\n", self.page_text).group(1)
+
+    def __get_address(self):
+        """Получает адрес платильщика"""
+        return re.search(r"Адрес: ([\w\W]*?)\n", self.page_text).group(1)
