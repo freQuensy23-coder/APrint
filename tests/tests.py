@@ -2,7 +2,7 @@
 import glob
 from Scanner import *
 
-PDF_Folder = "PDFs/*.pdf"
+PDF_Folder = r"C:\Users\mamet\PycharmProjects\QRgenerator\private\PDFs\*.pdf"   #Enter your folder here
 paths = (glob.glob(PDF_Folder))
 print("Found {} PDFs".format(str(len(paths))))
 

@@ -1,3 +1,8 @@
+colorama==0.4.3
+pdfminer==20191125
+Pillow==7.2.0
+pycryptodome==3.9.8
 PyMuPDF==1.17.4
+PyPDF2==1.26.0
 qrcode==6.1
 six==1.15.0
