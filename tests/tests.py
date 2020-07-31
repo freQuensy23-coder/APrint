@@ -1,4 +1,7 @@
 # Scanner test
+import sys
+sys.path.append('/home/alex/Documents/PythonProjects/APrint/')
+
 import glob
 from Classes.Scanner import *
 from Classes.QR import *
