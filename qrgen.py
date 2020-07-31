@@ -14,6 +14,7 @@ import termcolor
 import colorama
 import PyPDF2
 
+
 colorama.init()
 
 pdf_write_object = PyPDF2.PdfFileWriter()
@@ -35,7 +36,15 @@ def get_file_name(filename):
     return res
 
 
+def add_pdf_to_merging(pdf_filename, pdf_write_object):
+    pdf_read_object = PyPDF2.PdfFileReader(get_file_name(pdf_filename) + "_withQR.pdf")
+    for page in range(pdf_read_object.numPages):
+        pdf_write_object.addPage(pdf_read_object.getPage(page))
+    return pdf_write_object
+
+
 def main(args):
+    global pdf_write_object
     PATH_to_folder = '/home/alex/Documents/PythonProjects/APrint/private/PDFs/'
     NEED_SAVE_QR = False
     MERGE_PDFS = True
@@ -69,12 +78,16 @@ def main(args):
 
             # Merging pdfs
             if MERGE_PDFS:
-                pdf_read_object = PyPDF2.PdfFileReader(get_file_name(result_filename) + "_withQR.pdf")
-                for page in range(pdf_read_object.numPages):
-                    pdf_write_object.addPage(pdf_read_object.getPage(page))
+                pdf_write_object = add_pdf_to_merging(result_filename, pdf_write_object)
 
         except Exception as e:
             print(termcolor.colored("Ошибка при сохранении файла" + str(path) + str(e), "red"))
+
+        if MERGE_PDFS:
+            merged_pdf = open(PATH_to_folder + "Merged.pdf", 'wb')
+            pdf_write_object.write(merged_pdf)
+            merged_pdf.close()
+
 
 
 if __name__ == '__main__':
