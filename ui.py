@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import filedialog as fd
+import subprocess
 
 directory = str
 cvar1, cvar2 = str, str
@@ -19,6 +20,7 @@ def main():
         exit('cancel')
 
     def generate():
+
         global cvar1, cvar2, file_name
         run = 'qrgen.exe'
         run += ' {}'.format(file_name)
@@ -26,6 +28,7 @@ def main():
             run += ' -m'
         if cvar2.get():
             run += ' -s'
+        output = subprocess.check_output(run)
         print(run)
         exit()
 
