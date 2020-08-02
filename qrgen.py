@@ -1,6 +1,7 @@
 import sys
 
-sys.path.append('/home/alex/Documents/PythonProjects/APrint/')
+sys.path.append(r'C:\Users\mamet\PycharmProjects\QRgenerator')
+sys.path.append(r'C:\Users\mamet\PycharmProjects\QRgenerator\poppler')
 
 import glob
 from Classes.Scanner import *
@@ -13,11 +14,17 @@ import os
 import termcolor
 import colorama
 import PyPDF2
+import config
+from QRParse import parser
 
 
 colorama.init()
 
 pdf_write_object = PyPDF2.PdfFileWriter()
+
+
+def get_file_path(args):
+    return sys.argv[1]
 
 def connect(str_list):
     """Connect all strings of array"""
@@ -45,11 +52,17 @@ def add_pdf_to_merging(pdf_filename, pdf_write_object):
 
 def main(args):
     global pdf_write_object
-    PATH_to_folder = '/home/alex/Documents/PythonProjects/APrint/private/PDFs/'
-    NEED_SAVE_QR = False
-    MERGE_PDFS = True
+    # PATH_to_folder = '/home/alex/Documents/PythonProjects/APrint/private/PDFs/'
+    # NEED_SAVE_QR = False
+    # MERGE_PDFS = True
+    #
+    PATH_to_folder = args.folder_path
+    NEED_SAVE_QR = args.sQR
+    MERGE_PDFS = args.MergePDF
 
-    paths = (glob.glob(PATH_to_folder + "*.pdf"))
+    print(str(args))
+
+    paths = (glob.glob(PATH_to_folder + "\*.pdf"))
     print("Найдено {} PDF".format(str(len(paths))))
 
     for i, path in enumerate(paths):
@@ -66,13 +79,14 @@ def main(args):
         stamper.do_stamp()
 
         try:
-            printer = Printer(stamper.document, os.path.dirname(path) + "/QR/" + path.split("/")[-1])
+            printer = Printer(stamper.document, os.path.dirname(path) + '\\QR\\' + path.split("\\")[-1])
             printer.save()
-        except FileNotFoundError:
-            os.mkdir(PATH_to_folder + "QR")
-            print(termcolor.colored("Создал новую папку в " + str(PATH_to_folder + "QR"), "yellow"))
-            result_filename = os.path.dirname(path) + "/QR/" + path.split("/")[-1]
-            stamper.document, os.path.dirname(path) + "/QR/"
+        except FileNotFoundError as e:
+            print(PATH_to_folder)
+            os.mkdir(PATH_to_folder + "\\QR\\")
+            print(termcolor.colored("Создал новую папку в " + str(PATH_to_folder + "\\QR\\"), "yellow"))
+            result_filename = os.path.dirname(path) + "\\QR\\" + path.split("\\")[-1]
+            stamper.document, os.path.dirname(path) + "\\QR\\"
             printer = Printer(stamper.document, result_filename)
             printer.save()
 
@@ -80,8 +94,9 @@ def main(args):
             if MERGE_PDFS:
                 pdf_write_object = add_pdf_to_merging(result_filename, pdf_write_object)
 
-        except Exception as e:
-            print(termcolor.colored("Ошибка при сохранении файла" + str(path) + str(e), "red"))
+        # except Exception as e:
+        #     print(a)
+        #     # print(termcolor.colored("Ошибка при сохранении файла" + str(path) + str(e), "red"))
 
         if MERGE_PDFS:
             merged_pdf = open(PATH_to_folder + "Merged.pdf", 'wb')
@@ -89,7 +104,13 @@ def main(args):
             merged_pdf.close()
 
 
-
 if __name__ == '__main__':
-    main("")
+
+    args = parser.parse_args()
+    main(args)
+    print()
     print("Готого")
+    pass
+
+for i  in range(10):
+    pass
