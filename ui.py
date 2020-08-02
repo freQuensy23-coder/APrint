@@ -1,14 +1,18 @@
 from tkinter import *
 from tkinter import filedialog as fd
 import subprocess
+from UIpars import parser
 
 directory = str
 cvar1, cvar2 = str, str
-file_name = str()
+
+args = parser.parse_args()
+
+file_name = args.input_filename
+
 
 def main():
     global directory, cvar1, cvar2, file_name
-
 
     def dir():
         global directory
@@ -20,7 +24,6 @@ def main():
         exit('cancel')
 
     def generate():
-
         global cvar1, cvar2, file_name
         run = 'qrgen.exe'
         run += ' {}'.format(file_name)
