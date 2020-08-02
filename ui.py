@@ -3,11 +3,10 @@ from tkinter import filedialog as fd
 import subprocess
 from UIpars import parser
 
-directory = str
-cvar1, cvar2 = str, str
-
 args = parser.parse_args()
 
+directory = str
+cvar1, cvar2 = str, str
 file_name = args.input_filename
 
 
