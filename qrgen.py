@@ -16,7 +16,7 @@ import colorama
 import PyPDF2
 import config
 from QRParse import parser
-
+import time
 
 colorama.init()
 
@@ -107,6 +107,7 @@ def main(args):
 if __name__ == '__main__':
 
     args = parser.parse_args()
+    time.sleep(10)
     main(args)
     print()
     print("Готого")
