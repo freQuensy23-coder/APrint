@@ -1,11 +1,16 @@
+altgraph==0.17
 colorama==0.4.3
+fpdf==1.7.2
+future==0.18.2
 pdf2image==1.13.1
 pdfminer==20191125
+pefile==2019.4.18
 Pillow==7.2.0
 pycryptodome==3.9.8
+PyInstaller==3.6
 PyMuPDF==1.17.4
 PyPDF2==1.26.0
+pywin32-ctypes==0.2.0
 qrcode==6.1
 six==1.15.0
 termcolor==1.1.0
-
