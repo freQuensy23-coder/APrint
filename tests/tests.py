@@ -3,10 +3,10 @@ import sys
 sys.path.append('/home/alex/Documents/PythonProjects/APrint/')
 
 import glob
-from Classes.Scanner import *
-from Classes.QR import *
-from Classes.Stamper import *
-from Classes.Printer import *
+from Classes_and_Func.Scanner import *
+from Classes_and_Func.QR import *
+from Classes_and_Func.Stamper import *
+from Classes_and_Func.Printer import *
 import pdf2image
 
 PDF_Folder = r"/home/alex/Documents/PythonProjects/APrint/private/PDFs/*.pdf"  # Enter your folder here

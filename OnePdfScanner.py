@@ -4,10 +4,12 @@ sys.path.append(r'C:\Users\mamet\PycharmProjects\QRgenerator')
 sys.path.append(r'C:\Users\mamet\PycharmProjects\QRgenerator\poppler')
 
 import glob
-from Classes.Scanner import *
-from Classes.QR import *
-from Classes.Stamper import *
-from Classes.Printer import *
+
+from Classes_and_Func.Converter import *
+from Classes_and_Func.Scanner import *
+from Classes_and_Func.QR import *
+from Classes_and_Func.Stamper import *
+from Classes_and_Func.Printer import *
 
 import pdf2image
 import argparse
@@ -50,4 +52,6 @@ def main(args):
 
     print(str(args))
 
+
+    converter  = Converter
 
