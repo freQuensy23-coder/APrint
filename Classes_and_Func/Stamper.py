@@ -6,7 +6,6 @@ from PIL import ImageDraw
 
 class Stamper:
     """Класс отвечает за нанесение QR на пдф"""
-
     def __init__(self, qr, document_image):
         self.qr = qr.resize((config.QR_size, config.QR_size))  # изображение ресайзится до формата
         self.document = document_image  #Картинка - квитанция в формате фотографиии
