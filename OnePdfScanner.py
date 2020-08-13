@@ -13,6 +13,8 @@ from Classes_and_Func.QRParse import one_pdf_parser
 
 from Exceptions.NotDocumentError import *
 
+from collections import namedtuple
+
 import pdf2image
 import colorama
 import PyPDF2
@@ -74,6 +76,7 @@ def main(file_path):
     stamped_pages_images = []
 
     #get pages data
+
 
     stamped_pages_images = stamp_pages(pdf_pages_images, pdf_pages_texts)
     # List of images: Pdf's pages with QR and warning text
