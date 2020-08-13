@@ -75,12 +75,6 @@ def main(args):
                                  save_all=True,
                                  append_images=stamped_pages_images[1:])
 
-def merge_images_to_pdf(images):
-    pdf = FPDF()
-    for image in images:
-        pdf.add_page()
-        pdf.image(image, 0,0, 0,0)
-    return pdf
 
 def stamp_pages(pdf_pages_images, pdf_pages_texts):
     stamped_images = []
