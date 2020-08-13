@@ -3,27 +3,19 @@ import sys
 sys.path.append(r'C:\Users\mamet\PycharmProjects\QRgenerator')
 sys.path.append(r'C:\Users\mamet\PycharmProjects\QRgenerator\poppler')
 
-import glob
-
-from Classes_and_Func.Converter import *
 from Classes_and_Func.Scanner import *
 from Classes_and_Func.QR import *
 from Classes_and_Func.Stamper import *
 from Classes_and_Func.Printer import *
 from Classes_and_Func.PDF_Opener import *
 from Classes_and_Func.get_time import *
+from Classes_and_Func.QRParse import one_pdf_parser
 
 from Exceptions.NotDocumentError import *
 
 import pdf2image
-import argparse
-import os
-import termcolor
 import colorama
 import PyPDF2
-import config
-from QRParse import parser
-import datetime
 
 colorama.init()
 
@@ -51,31 +43,6 @@ def get_file_name(filename):
     return res
 
 
-def main(args):
-    global pdf_write_object
-
-    # FILE_PATH = args.file_path
-    FILE_PATH = "test.pdf"
-    print(str(args))
-
-    pdf_pages_images = pdf2image.convert_from_path(FILE_PATH)
-    # Массив куда будут помещены фото платежек, после того, как Stamper их "проштампит"
-
-    pages_info = get_pdf_pages(open_PDF(FILE_PATH))
-    pages = pages_info["pdf_pages"]
-    pdf_pages_texts = pages_info["pdf_text"]
-    print("Найдено {num} листов".format(num=len(pdf_pages_texts)))
-
-    stamped_pages_images = stamp_pages(pdf_pages_images, pdf_pages_texts)
-    # List of images: Pdf's pages with QR and warning text
-    print(stamped_pages_images)
-    img = stamped_pages_images[0]
-    img.save(get_file_name(FILE_PATH) + "_stamped_" + get_time() + ".pdf",
-                                 resolution = 100.0,
-                                 save_all=True,
-                                 append_images=stamped_pages_images[1:])
-
-
 def stamp_pages(pdf_pages_images, pdf_pages_texts):
     stamped_images = []
     for page_number, page_text in enumerate(pdf_pages_texts):
@@ -93,10 +60,44 @@ def stamp_pages(pdf_pages_images, pdf_pages_texts):
             stamped_images.append(pdf_pages_images[page_number])
         except:
             print(page_text)
-            print(0/0)
+            print(0 / 0)
     return stamped_images
 
 
+def main(file_path):
+    global pdf_write_object
+
+    # Get PIL.Image of every pdf page
+    pdf_pages_images = get_pdf_images(file_path)
+
+    # List where PIL.Images of payments will be placed after Stamper "stamp" them
+    stamped_pages_images = []
+
+    #get pages data
+
+    stamped_pages_images = stamp_pages(pdf_pages_images, pdf_pages_texts)
+    # List of images: Pdf's pages with QR and warning text
+    print(stamped_pages_images)
+    img = stamped_pages_images[0]
+    img.save(get_file_name(file_path) + "_stamped_" + get_time() + ".pdf",
+             resolution=100.0,
+             save_all=True,
+             append_images=stamped_pages_images[1:])
+
+
+def get_pdf_images(FILE_PATH):
+    """Returns list of PIL.Image"""
+    return pdf2image.convert_from_path(FILE_PATH)
+
+
+def get_pages_data(file_path):
+    """Returns dict of lists with pages (fitz?) and their text"""
+    pages_info = get_pdf_pages(open_PDF(file_path))
+    pages = pages_info["pdf_pages"]
+    pdf_pages_texts = pages_info["pdf_text"]
+    print("Найдено {num} листов".format(num=len(pdf_pages_texts)))
+    return
+
 if __name__ == '__main__':
-    args = parser.parse_args()
-    main(args)
+    args = one_pdf_parser.parse_args()
+    main(args.file_name)
