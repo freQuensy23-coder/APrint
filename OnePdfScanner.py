@@ -68,15 +68,15 @@ def main(args):
     print("Найдено {num} листов".format(num=len(pdf_pages_texts)))
 
     stamped_pages_images = stamp_pages(pdf_pages_images, pdf_pages_texts)
-    #List of images: Pdf's pages with QR and warning text
-    # print(stamped_pages_images)
-    # img = stamped_pages_images[0]
-    # img.save(get_file_name(FILE_PATH) + "_stamped_" + get_time() + ".pdf",
-    #                              resolution = 100.0,
-    #                              save_all=True,
-    #                              append_images=stamped_pages_images[1:])
-    pdf = merge_images_to_pdf(stamped_pages_images)
-    pdf.output(get_file_name(FILE_PATH) + "_stamped_" + get_time() + ".pdf", "F")
+    # List of images: Pdf's pages with QR and warning text
+    print(stamped_pages_images)
+    img = stamped_pages_images[0]
+    img.save(get_file_name(FILE_PATH) + "_stamped_" + get_time() + ".pdf",
+                                 resolution = 100.0,
+                                 save_all=True,
+                                 append_images=stamped_pages_images[1:])
+    # pdf = merge_images_to_pdf(stamped_pages_images)
+    # pdf.output(get_file_name(FILE_PATH) + "_stamped_" + get_time() + ".pdf", "F")
 
 def merge_images_to_pdf(images):
     pdf = FPDF()
