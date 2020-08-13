@@ -9,13 +9,11 @@ from Classes_and_Func.QR import *
 from Classes_and_Func.Stamper import *
 from Classes_and_Func.Printer import *
 import pdf2image
-import argparse
 import os
 import termcolor
 import colorama
 import PyPDF2
-import config
-from QRParse import parser
+from Classes_and_Func.QRParse import parser
 import time
 
 colorama.init()
