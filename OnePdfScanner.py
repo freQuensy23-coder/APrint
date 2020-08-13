@@ -75,7 +75,8 @@ def main(file_path):
     # List where PIL.Images of payments will be placed after Stamper "stamp" them
     stamped_pages_images = []
 
-    #get pages data
+    # get pages data
+    pages, pdf_pages_texts = get_pages_data(file_path)
 
 
     stamped_pages_images = stamp_pages(pdf_pages_images, pdf_pages_texts)
@@ -95,12 +96,14 @@ def get_pdf_images(FILE_PATH):
 
 def get_pages_data(file_path):
     """Returns dict of lists with pages (fitz?) and their text"""
+    pages_data = namedtuple("data",  ["pages", "text"])
     pages_info = get_pdf_pages(open_PDF(file_path))
     pages = pages_info["pdf_pages"]
     pdf_pages_texts = pages_info["pdf_text"]
     print("Найдено {num} листов".format(num=len(pdf_pages_texts)))
-    return
+    result = pages_data(pages, pdf_pages_texts)
+    return result
 
 if __name__ == '__main__':
     args = one_pdf_parser.parse_args()
-    main(args.file_name)
+    main(args.file_path)
