@@ -24,7 +24,6 @@ import PyPDF2
 import config
 from QRParse import parser
 import datetime
-from fpdf import FPDF
 
 colorama.init()
 
@@ -75,8 +74,6 @@ def main(args):
                                  resolution = 100.0,
                                  save_all=True,
                                  append_images=stamped_pages_images[1:])
-    # pdf = merge_images_to_pdf(stamped_pages_images)
-    # pdf.output(get_file_name(FILE_PATH) + "_stamped_" + get_time() + ".pdf", "F")
 
 def merge_images_to_pdf(images):
     pdf = FPDF()
