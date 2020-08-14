@@ -28,3 +28,5 @@ class Stamper:
 
     def save(self, FILENAME):
         self.document.save(FILENAME=FILENAME)
+
+
