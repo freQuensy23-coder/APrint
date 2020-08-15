@@ -19,8 +19,20 @@ def getting_data_from_pdf(file_path):
 
 
 def main(file_path):
-    def text_geter_in_entry():
-        pass
+    def text_geter_in_entry(page):
+        def geter():
+            global ename, eperiod, eaddress, ebankid, ecost
+            mas = []
+            mas.append(ename.get())
+            return
+        global pages_data
+        tmp_page_data = []
+        for i, el in enumerate(pages_data):
+            if i != page:
+                tmp_page_data.append()
+            elif i == page:
+                geter()
+
 
     def text_inserter_to_entry(page):
         global pages_data
