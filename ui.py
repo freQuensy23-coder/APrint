@@ -49,7 +49,7 @@ def main(file_path):
             try:
                 if el['name'] == combo_var.get().split(',')[0]:
                     print('Выбранн элемент {}'.format(i))
-                    text_inserter_to_entry()
+                    text_inserter_to_entry(i)
             except TypeError:
                 pass
 
