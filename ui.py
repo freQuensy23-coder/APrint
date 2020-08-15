@@ -18,6 +18,7 @@ def getting_data_from_pdf(file_path):
     pages_data = get_pages_data(pages_texts)
 
 
+
 def main(file_path):
     def text_geter_in_entry(page):
         def geter():
