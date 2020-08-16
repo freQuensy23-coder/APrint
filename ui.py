@@ -2,7 +2,7 @@ from Classes_and_Func.PagesFunc import *
 from tkinter import *
 from tkinter.ttk import *
 
-pages_texts, images, pages_data, insert_pages_data = 0, 0, 0, 0
+pages_texts, images, pages_data, insert_pages_data, my_pages_data = 0, 0, 0, 0, 0
 win = Tk()
 combo_var = StringVar()
 ename, eperiod, eaddress, ebankid, ecost = Entry(width=40), Entry(width=40), Entry(width=40), Entry(width=40), \
@@ -18,19 +18,18 @@ def getting_data_from_pdf(file_path):
     pages_data = get_pages_data(pages_texts)
 
 
-
 def main(file_path):
     def text_geter_in_entry(page):
         def geter():
-            global ename, eperiod, eaddress, ebankid, ecost
-            mas = []
-            mas.append(ename.get())
+            global ename, eperiod, eaddress, ebankid, ecost, my_pages_data
+            mas = [ename.get(), eperiod.get(), eaddress.get(), ebankid.get(), int(float(ecost.get().split()[0]) * 100)]
             return
-        global pages_data
+
+        global my_pages_data
         tmp_page_data = []
-        for i, el in enumerate(pages_data):
+        for i, el in enumerate(my_pages_data):
             if i != page:
-                tmp_page_data.append()
+                tmp_page_data.append(my_pages_data[i])
             elif i == page:
                 geter()
 
@@ -52,7 +51,7 @@ def main(file_path):
         adress = pd['address']
         bank = pd['bank_id']
         a = pd['cost']
-        cost = '{},{} Руб.'.format((int(a) - int(a) % 100) // 100, int(a) % 100)
+        cost = '{}.{} Руб.'.format((int(a) - int(a) % 100) // 100, int(a) % 100)
         recorder(name, period, adress, bank, cost)
 
     def combo_bind(event):
@@ -78,11 +77,12 @@ def main(file_path):
         return tmp
 
     getting_data_from_pdf(file_path)
-    global pages_data, pages_texts, images, insert_pages_data
+    global pages_data, pages_texts, images, insert_pages_data, my_pages_data
     global win, combo_var
+    my_pages_data = pages_data
 
     insert_pages_data = pages_data_to_insert_format(pages_data)
-    combo = Combobox(win, textvariable=combo_var, values=insert_pages_data, width=60)
+    combo = Combobox(win, textvariable=combo_var, values=insert_pages_data, width=70)
     combo.grid(row=0, columnspan=5, pady=3)
     combo.bind('<<ComboboxSelected>>', combo_bind)
     global ename, eperiod, eaddress, ebankid, ecost
@@ -96,6 +96,10 @@ def main(file_path):
     Label(text='Банк').grid(row=4, column=0)
     ecost.grid(row=5, column=1)
     Label(text='Сумма').grid(row=5, column=0)
+    bOK = Button(text='OK')
+    bOK.grid(row=6, column=4)
+    bDefult = Button(text='По Умолчанию')
+    bDefult.grid(row=6, column=3)
     win.mainloop()
 
 
