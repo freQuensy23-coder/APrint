@@ -4,8 +4,8 @@ from tkinter.ttk import *
 
 pages_texts, images, pages_data, insert_pages_data, my_pages_data = 0, 0, 0, 0, 0
 file_path = 0
-win = 0
-combo_var = 0
+win = Tk()
+combo_var = StringVar()
 ename, eperiod, eaddress, ebankid, ecost = Entry(width=40), Entry(width=40), Entry(width=40), Entry(width=40), \
                                            Entry(width=40)
 
@@ -23,21 +23,23 @@ def main(fp):
     global file_path
     file_path = fp
     global win, combo_var
-    win = Tk()
-    combo_var = StringVar()
 
     def text_geter_in_entry(page):
         def geter():
             dic = {}
             global ename, eperiod, eaddress, ecost, my_pages_data
-            try:
-                dic['cost'] = int(float(ecost.get().split()[0]) * 100)
-                dic['period'] = eperiod.get()
-                dic['name'] = ename.get()
-                dic['address'] = eaddress.get()
-                return dic
-            except IndexError:
-                return 0
+            # try:
+            if 1:
+                a = ecost.get()
+                if a != '':
+                    dic['cost'] = int(float(ecost.get().split()[0]) * 100)
+                    dic['period'] = eperiod.get()
+                    dic['name'] = ename.get()
+                    dic['address'] = eaddress.get()
+                    return dic
+                else:
+            # except IndexError:
+                    return 0
 
         global my_pages_data
         tmp_page_data = []
@@ -45,8 +47,10 @@ def main(fp):
             if i != page:
                 tmp_page_data.append(my_pages_data[i])
             elif i == page:
-                if geter():
+                if geter() != 0:
                     tmp_page_data.append(geter())
+                elif geter() == 0:
+                    tmp_page_data.append(my_pages_data[i])
         print(tmp_page_data)
 
     def text_inserter_to_entry(page):
@@ -82,6 +86,7 @@ def main(fp):
         save_images_to_pdf(stamped_images, final_file_path)
 
     def defult_bind():
+        global my_pages_data
         my_pages_data = pages_data
         combo_bind(0)
 
@@ -90,7 +95,8 @@ def main(fp):
         print(combo_var.get())
         for i, el in enumerate(pages_data):
             try:
-                if el['name'] == combo_var.get().split(',')[0]:
+                a = combo_var.get()
+                if el['name'] == a.split(',')[0]:
                     print('Выбранн элемент {}'.format(i))
                     text_geter_in_entry(i)
                     text_inserter_to_entry(i)
@@ -104,13 +110,12 @@ def main(fp):
                 pass
             else:
                 a = el['cost']
-                sum = '{},{} Руб.'.format((int(a) - int(a) % 100) // 100, int(a) % 100)
+                sum = '{}.{} Руб.'.format((int(a) - int(a) % 100) // 100, int(a) % 100)
                 tmp.append('{},   {}'.format(el['name'], sum))
         return tmp
 
     getting_data_from_pdf(file_path)
     global pages_data, pages_texts, images, insert_pages_data, my_pages_data
-    global win, combo_var
     my_pages_data = pages_data
 
     insert_pages_data = pages_data_to_insert_format(pages_data)
@@ -124,11 +129,11 @@ def main(fp):
     Label(text='Период').grid(row=2, column=0)
     eaddress.grid(row=3, column=1)
     Label(text='Адресат').grid(row=3, column=0)
-    ecost.grid(row=5, column=1)
+    ecost.grid(row=4, column=1)
     Label(text='Сумма').grid(row=4, column=0)
-    bOK = Button(text='OK')
-    bOK.grid(row=5, column=4, command=ok_bind)
-    bDefult = Button(text='По Умолчанию')
+    bOK = Button(text='OK', command=ok_bind)
+    bOK.grid(row=5, column=4)
+    bDefult = Button(text='По Умолчанию', command=defult_bind)
     bDefult.grid(row=5, column=3)
     win.mainloop()
 
