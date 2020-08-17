@@ -68,6 +68,7 @@ def main(file_path):  # основная функция
         bOK.grid(row=5, column=4)  # размещение кнопки ОК
         bDefult = Button(text='По Умолчанию', command=defult_bind)  # создание кнопки По Умолчанию
         bDefult.grid(row=5, column=3)  # размещение кнопки По Умолчанию
+        # для считывание текста из поля ввода нужно a = ename.get()
         win.mainloop()  # цикл окна
 
     gui()  # запуск интерфейса
