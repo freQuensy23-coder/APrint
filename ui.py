@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter.ttk import *
 
 pages_texts, images, pages_data, insert_pages_data, my_pages_data = 0, 0, 0, 0, 0
+file_path = 0
 win = Tk()
 combo_var = StringVar()
 ename, eperiod, eaddress, ebankid, ecost = Entry(width=40), Entry(width=40), Entry(width=40), Entry(width=40), \
@@ -18,7 +19,10 @@ def getting_data_from_pdf(file_path):
     pages_data = get_pages_data(pages_texts)
 
 
-def main(file_path):
+def main(fp):
+    global file_path
+    file_path = fp
+
     def text_geter_in_entry(page):
         def geter():
             global ename, eperiod, eaddress, ebankid, ecost, my_pages_data
@@ -33,7 +37,6 @@ def main(file_path):
             elif i == page:
                 geter()
 
-
     def text_inserter_to_entry(page):
         global pages_data
 
@@ -45,6 +48,14 @@ def main(file_path):
             ebankid.insert(0, bankid)
             ecost.insert(0, cost)
 
+        def cleaner():
+            global ename, eperiod, eaddress, ebankid, ecost
+            ename.delete(0, END)
+            eperiod.delete(0, END)
+            eaddress.delete(0, END)
+            ebankid.delete(0, END)
+            ecost.delete(0, END)
+
         pd = pages_data[page]
         name = pd['name']
         period = pd['period']
@@ -52,7 +63,14 @@ def main(file_path):
         bank = pd['bank_id']
         a = pd['cost']
         cost = '{}.{} Руб.'.format((int(a) - int(a) % 100) // 100, int(a) % 100)
+        cleaner()
         recorder(name, period, adress, bank, cost)
+
+    def ok_bind():
+        global images, pages_data, file_path
+        stamped_images = stamp_pages(images, pages_data)
+        final_file_path = get_pdf_file_path(file_path)
+        save_images_to_pdf(stamped_images, final_file_path)
 
     def combo_bind(event):
         global combo_var, pages_data
@@ -61,6 +79,7 @@ def main(file_path):
             try:
                 if el['name'] == combo_var.get().split(',')[0]:
                     print('Выбранн элемент {}'.format(i))
+                    text_geter_in_entry(i)
                     text_inserter_to_entry(i)
             except TypeError:
                 pass
@@ -104,4 +123,5 @@ def main(file_path):
 
 
 if __name__ == '__main__':
-    main("test.pdf")
+    # main("test.pdf")
+    getting_data_from_pdf('test.pdf')
