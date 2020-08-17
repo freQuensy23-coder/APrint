@@ -95,7 +95,7 @@ def get_pdf_file_path(source_file_path):
     return connect(source_file_path.split(".")[:-1]) + "_stamped-" + get_time() + ".pdf"
 
 
-def save_images_to_pdf(images, filepath, quality):
+def save_images_to_pdf(images, filepath, quality = 75):
     """Save all PIL.Images to pdf file"""
     images[0].save(filepath,
                    resolution=100.0,

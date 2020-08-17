@@ -19,7 +19,11 @@ class Stamper:
         self.document.paste(self.qr, config.QR_left_corner)
 
     def __stamp_waring_text(self):
+<<<<<<< HEAD
         waring_text = Image.open("CheckQR.png")
+=======
+        waring_text = Image.open("CheckQR_.png")
+>>>>>>> cedc7d1557eabb4532d2bb05b5e7fcfdfec9f7b7
         self.document.paste(waring_text, (config.QR_left_corner[0], config.QR_left_corner[1] + config.QR_size + 10))
 
     def show(self):
