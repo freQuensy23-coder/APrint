@@ -10,8 +10,6 @@ win = Tk()  # Создание окна
 combo_var = StringVar()
 ename, eperiod, eaddress, ebankid, ecost = Entry(width=40), Entry(width=40), Entry(width=40), Entry(width=40), \
                                            Entry(width=40)
-
-
 # Поля для ввода/вывода данных о платёжке
 
 
@@ -25,9 +23,8 @@ def getting_data_from_pdf(file_path):
 
 
 def main(file_path):
-    global file_path
+    global _file_path
     _file_path = file_path
-
     def text_inserter_to_entry(page):
         global pages_data
 
