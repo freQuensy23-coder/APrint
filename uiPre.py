@@ -1,19 +1,18 @@
 from Classes_and_Func.PagesFunc import *
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import messagebox as mb
 
 # Импорт Библиотек
 
 pages_texts, images, pages_data, insert_pages_data, my_pages_data = 0, 0, 0, 0, 0  # задание глобальных переменных
-<<<<<<< HEAD
 _file_path = 0
-=======
-file_path = 0
->>>>>>> bf65c9b801f8629ad43b0dc82a0b38acf95c2b24
 win = Tk()  # Создание окна
 combo_var = StringVar()
 ename, eperiod, eaddress, ebankid, ecost = Entry(width=40), Entry(width=40), Entry(width=40), Entry(width=40), \
                                            Entry(width=40)
+
+
 # Поля для ввода/вывода данных о платёжке
 
 
@@ -29,6 +28,7 @@ def getting_data_from_pdf(file_path):
 def main(file_path):
     global _file_path
     _file_path = file_path
+
     def text_inserter_to_entry(page):
         global pages_data
 
@@ -59,14 +59,14 @@ def main(file_path):
         recorder(name, period, adress, bank, cost)
 
     def OK_bind():
-<<<<<<< HEAD
         global images, pages_data, _file_path
-=======
-        global images, pages_data, file_path
->>>>>>> bf65c9b801f8629ad43b0dc82a0b38acf95c2b24
+        Label(win, text='Сохранение', font=('Arial', 32, 'bold')).place(relx=0.3, rely=0.3)
+        win.update()
         stamped_images = stamp_pages(images, pages_data)
         final_file_path = get_pdf_file_path(_file_path)
         save_images_to_pdf(stamped_images, final_file_path)
+        mb.showinfo('Инфо о сохранении', '''Сохраненно успешно \nв {}'''.format(final_file_path))
+        win.destroy()
 
     def combo_bind(event):
         global combo_var, pages_data
@@ -95,6 +95,9 @@ def main(file_path):
     global win, combo_var
     my_pages_data = pages_data
 
+    # GUI
+
+    win.title('APrint')
     insert_pages_data = pages_data_to_insert_format(pages_data)
     combo = Combobox(win, textvariable=combo_var, values=insert_pages_data, width=70)
     combo.grid(row=0, columnspan=5, pady=3)
