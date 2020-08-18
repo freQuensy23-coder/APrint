@@ -10,7 +10,7 @@ class Scanner:
             raise NotDocumentError
         self.cost = self.__get_cost()
         self.bank_id = self.__get_bank_id()
-        self.period = self.__get_period() + self.__get_bank_id()
+        self.period = self.__get_period()
         self.name = self.__get_name()
         self.address = self.__get_address()
         self.data = {"cost": self.cost,
