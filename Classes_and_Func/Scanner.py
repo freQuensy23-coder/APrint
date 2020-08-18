@@ -10,7 +10,7 @@ class Scanner:
             raise NotDocumentError
         self.cost = self.__get_cost()
         self.bank_id = self.__get_bank_id()
-        self.period = self.__get_period()
+        self.period = self.__get_period() + self.__get_bank_id()
         self.name = self.__get_name()
         self.address = self.__get_address()
         self.data = {"cost": self.cost,
@@ -53,7 +53,7 @@ class Scanner:
 
     def __get_bank_id(self):
         """Получает номер илчцегого счета (прим. № л/сч 000000048)"""
-        return self.get_data_from_pdf(r"№\sл/сч\s([\d\s\w-]*?)").replace("№л/сч", "")
+        return self.get_data_from_pdf(r"№\sл/сч\s([\d\D]*?)\s")
 
     def __get_period(self):
         """Получает периуд оплаты"""

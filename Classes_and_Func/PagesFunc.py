@@ -101,5 +101,5 @@ def save_images_to_pdf(images, filepath, quality = 75):
                    resolution=100.0,
                    save_all=True,
                    append_images=images[1:],
-                   quality = quality
+                   quality=quality
                    )
