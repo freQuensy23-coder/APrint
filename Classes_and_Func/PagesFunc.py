@@ -40,7 +40,6 @@ def get_pages_texts_docs(file_path):
     pages_info = get_pdf_pages(open_PDF(file_path))
     pages = pages_info["pdf_pages"]
     pdf_pages_texts = pages_info["pdf_text"]
-    # print("Найдено {num} листов".format(num=len(pdf_pages_texts)))
     result = pages_data(pages, pdf_pages_texts)
     return result
 

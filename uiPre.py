@@ -5,7 +5,11 @@ from tkinter.ttk import *
 # Импорт Библиотек
 
 pages_texts, images, pages_data, insert_pages_data, my_pages_data = 0, 0, 0, 0, 0  # задание глобальных переменных
+<<<<<<< HEAD
+_file_path = 0
+=======
 file_path = 0
+>>>>>>> bf65c9b801f8629ad43b0dc82a0b38acf95c2b24
 win = Tk()  # Создание окна
 combo_var = StringVar()
 ename, eperiod, eaddress, ebankid, ecost = Entry(width=40), Entry(width=40), Entry(width=40), Entry(width=40), \
@@ -55,7 +59,11 @@ def main(file_path):
         recorder(name, period, adress, bank, cost)
 
     def OK_bind():
+<<<<<<< HEAD
+        global images, pages_data, _file_path
+=======
         global images, pages_data, file_path
+>>>>>>> bf65c9b801f8629ad43b0dc82a0b38acf95c2b24
         stamped_images = stamp_pages(images, pages_data)
         final_file_path = get_pdf_file_path(_file_path)
         save_images_to_pdf(stamped_images, final_file_path)

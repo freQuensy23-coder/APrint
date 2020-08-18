@@ -53,7 +53,7 @@ class Scanner:
 
     def __get_bank_id(self):
         """Получает номер илчцегого счета (прим. № л/сч 000000048)"""
-        return self.get_data_from_pdf(r"№\sл/сч\s([\d\s\w-]*?)").replace("№л/сч", "")
+        return self.get_data_from_pdf(r"№\sл/сч\s([\d\D]*?)\s")
 
     def __get_period(self):
         """Получает периуд оплаты"""
