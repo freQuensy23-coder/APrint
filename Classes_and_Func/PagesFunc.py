@@ -17,6 +17,7 @@ import PyPDF2
 
 colorama.init()
 
+
 def connect(str_list):
     """Connect all strings of array"""
     res = ""
@@ -79,7 +80,14 @@ def stamp_pages(pdf_pages_images, datas):
     for page_number, image in enumerate(pdf_pages_images):
         if datas[page_number] is not None:
             data = datas[page_number]
-            qr = QR(cost=data["cost"], name=data["name"], address=data["address"], period=data["period"])
+
+            qr = QR(cost=data["cost"],
+                    name=data["name"],
+                    address=data["address"],
+                    period=data["period"],
+                    bank_id=data["bank_id"]
+                    )
+
             stamper = Stamper(qr=qr.qr, document_image=pdf_pages_images[page_number])
             stamper.do_stamp()
             stamped_images.append(stamper.document)
@@ -95,7 +103,7 @@ def get_pdf_file_path(source_file_path):
     return connect(source_file_path.split(".")[:-1]) + "_stamped-" + get_time() + ".pdf"
 
 
-def save_images_to_pdf(images, filepath, quality = 75):
+def save_images_to_pdf(images, filepath, quality=75):
     """Save all PIL.Images to pdf file"""
     images[0].save(filepath,
                    resolution=100.0,
